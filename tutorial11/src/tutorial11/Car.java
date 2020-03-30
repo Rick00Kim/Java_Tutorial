@@ -1,0 +1,11 @@
+package tutorial11;
+
+public class Car {
+	// ¸®ÅÍ·² »ó¼ö
+	public static final int MAX_SPEED=200;
+	public static final int STEP=10;
+	public static final int FUEL_STEP=2;
+	//¸â¹öÇÊµå
+	private String name;
+	
+}
