@@ -1,9 +1,9 @@
 package mms.karaoke.excute;
 
-import mms.karaoke.ui.Choose_Frame;
+import mms.karaoke.ui.ChooseFrame;
 
 public class KaraokeExcute {
-	public static void main(String[] ar){
-		new Choose_Frame();
+	public static void main(String[] ar) {
+		new ChooseFrame();
 	}
 }

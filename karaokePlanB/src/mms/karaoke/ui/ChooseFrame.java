@@ -13,21 +13,23 @@ import mms.karaoke.model.Person;
 import mms.karaoke.service.*;
 import mms.karaoke.util.*;
 
-public class Choose_Frame extends JFrame {
+public class ChooseFrame extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+
 	static int x, y;
 	static ArrayList<Person> personArr;
 	private JLabel showImage = new JLabel();
 	private JButton[] jbutton = new JButton[2];
-	private JButton personSelectButton = new JButton("추첨하기");
+	private JButton personSelectButton = new JButton("Select");
 	private JLabel message = null;
-	JPanel center; // toString활용
+	JPanel center;
 	private ImageIcon[] ic = new ImageIcon[4];
 	private JTable table;
 	private JLabel[] personInfoL;
-	private JTextField[] personInfoT;
 	Border rb = new LineBorder(new Color(247, 153, 23), 3);
 
-	public Choose_Frame() {
+	public ChooseFrame() {
 		setTitle("KARAOKE Plan.B");
 		setSize(1000, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,18 +48,16 @@ public class Choose_Frame extends JFrame {
 	}
 
 	public void init(int x, int y) {
-		// 레이아웃
+		// Layout
 		new AudioManager("Sound/3.wav");
-		center = new JPanel(); // 바탕
+		center = new JPanel();
 		center.setLayout(null);
-		center.setBackground(new Color(70, 70, 70)); // 기본 화면 색
+		center.setBackground(new Color(70, 70, 70));
 
-		JPanel p_Title = new JPanel(); // 타이틀
+		JPanel p_Title = new JPanel();
 		p_Title.setLayout(new GridLayout());
-		JPanel p_Bottom = new JPanel(); // 하단 바
-		// 이미지 삽입!
-		showImage = new JLabel(ic[0] = new ImageIcon("image/ready.jpg")); // 준비상태
-		// 이미지
+		JPanel p_Bottom = new JPanel();
+		showImage = new JLabel(ic[0] = new ImageIcon("image/ready.jpg"));
 		ic[1] = new ImageIcon("image/choose_success.gif");
 		ic[2] = new ImageIcon("image/jackson.jpg");
 		ic[3] = new ImageIcon("image/choose_ing.gif");
@@ -68,26 +68,25 @@ public class Choose_Frame extends JFrame {
 		jbutton[0] = new JButton();
 		jbutton[1] = new JButton();
 		for (int i = 0; i < jbutton.length; i++) {
-			jbutton[i].setBackground(new Color(50, 50, 50)); // 상단 버튼 배경
-			jbutton[i].setForeground(new Color(220, 220, 220)); // 글씨 색
+			jbutton[i].setBackground(new Color(50, 50, 50));
+			jbutton[i].setForeground(new Color(220, 220, 220));
 			jbutton[i].setFont(new Font("", Font.BOLD, 40));
 			jbutton[i].setFocusPainted(false);
 			jbutton[i].setBorder(rb);
 			p_Title.add(jbutton[i]);
 		}
-		jbutton[0].setText("도전 천곡");
-		jbutton[1].setText("다시 시작");
+		jbutton[0].setText("CHALLENGE");
+		jbutton[1].setText("Replay");
 		jbutton[1].addActionListener(new ResetAction());
-		p_Title.setBackground(new Color(50, 50, 50)); // 상단 바
+		p_Title.setBackground(new Color(50, 50, 50));
 		add("North", p_Title);
-		// 이미지 삽입 끝!
 		personSelectButton.setBackground(new Color(50, 50, 50));
 		personSelectButton.setForeground(new Color(220, 220, 220));
 		personSelectButton.setFocusPainted(false);
 		personSelectButton.setBorder(rb);
 		personSelectButton.addActionListener(new ButtonAction());
 		p_Bottom.setLayout(new GridLayout());
-		p_Bottom.add(personSelectButton); // 하단바 삽입
+		p_Bottom.add(personSelectButton);
 		p_Bottom.setBackground(new Color(50, 50, 50));
 		personSelectButton.setFont(new Font("", Font.BOLD, 30));
 		message = new JLabel();
@@ -102,26 +101,25 @@ public class Choose_Frame extends JFrame {
 
 	public void initTable() {
 		JLabel[] dmlController = new JLabel[3];
-		ImageIcon[] dmlIcon = new ImageIcon[3];
 		personInfoL = new JLabel[3];
 		JTextField[] personInfoT = new JTextField[3];
 		PersonListService ps = new PersonListService();
 		personArr = ps.loadPersonInfo();
-		
-		String[] header = { "이름", "성별", "반" };
+
+		String[] header = { "NAME", "SEX", "CLASS" };
 		String[][] contents = new String[personArr.size()][3];
 		for (int i = 0; i < contents.length; i++) {
 			for (int j = 0; j < contents[i].length; j++) {
 				switch (j) {
-				case 0:
-					contents[i][j] = personArr.get(i).getName();
-					break;
-				case 1:
-					contents[i][j] = personArr.get(i).getGender();
-					break;
-				case 2:
-					contents[i][j] = personArr.get(i).getRoom();
-					break;
+					case 0:
+						contents[i][j] = personArr.get(i).getName();
+						break;
+					case 1:
+						contents[i][j] = personArr.get(i).getGender();
+						break;
+					case 2:
+						contents[i][j] = personArr.get(i).getRoom();
+						break;
 				}
 			}
 		}
@@ -176,9 +174,9 @@ public class Choose_Frame extends JFrame {
 		public void mouseClicked(MouseEvent e) {
 			JLabel tmp = (JLabel) e.getComponent();
 			if (tmp.getText().equals("+")) {
-				
+
 			} else if (tmp.getText().equals("-")) {
-				
+
 			} else if (tmp.getText().equals("^")) {
 
 			}
@@ -187,7 +185,7 @@ public class Choose_Frame extends JFrame {
 
 	class ResetAction implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
-			personSelectButton.setText("추첨하기");
+			personSelectButton.setText("SELECT");
 			showImage.setIcon(ic[0]);
 			message.setText("");
 		}
@@ -196,10 +194,10 @@ public class Choose_Frame extends JFrame {
 	class ButtonAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			JButton temp = (JButton) e.getSource();
-			if (temp.getText().equals("추첨하기")) {
+			if (temp.getText().equals("SELECT")) {
 				showImage.setIcon(ic[3]);
-				personSelectButton.setText("당첨자 확인");
-				try {// 타이머로 choose_ing.gif가 재생되는 시간을 조절
+				personSelectButton.setText("CEHCK Participant");
+				try {
 					Timer timer = new Timer();
 					TimerTask task = new TimerTask() {
 						public void run() {
@@ -211,17 +209,17 @@ public class Choose_Frame extends JFrame {
 					e1.printStackTrace();
 				}
 
-			} else if (temp.getText().equals("당첨자 확인")) {
+			} else if (temp.getText().equals("CEHCK Participant")) {
 				showImage.setIcon(ic[2]);
 				MakeRandom r = new MakeRandom();
 				int random = r.getRan(personArr.size());
 				GetOneService gos = new GetOneService();
 				Person seleted = gos.getOnePerson(random);
-				String[] lucky = { seleted.getName(), "씨 당첨입니다." };
+				String[] lucky = { seleted.getName(), "`s Turn!!!" };
 				message.setText(lucky[0] + lucky[1]);
 				new AudioManager("Sound/1.wav");
-				personSelectButton.setText("다음으로");
-			} else if (temp.getText().equals("다음으로")) {
+				personSelectButton.setText("NEXT");
+			} else if (temp.getText().equals("NEXT")) {
 				new MyFrame(x, y);
 			}
 		}
